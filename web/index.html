@@ -48,7 +48,6 @@
           <span>Assistant IA</span>
           <div style="display:flex;gap:6px">
             <span class="chip" id="chip-rdv">Prendre RDV</span>
-            <span class="chip" id="chip-tarifs">Tarifs</span>
           </div>
         </div>
         <div id="caro-chat" style="padding:12px;height:360px;overflow:auto;font-size:14px;line-height:1.45;background:#fafafa">
@@ -66,19 +65,13 @@
     const input=document.getElementById("caro-input");
     const send=document.getElementById("caro-send");
     const chipRDV=document.getElementById("chip-rdv");
-    const chipTarifs=document.getElementById("chip-tarifs");
 
     bubble.onclick=()=>{ panel.style.display=(panel.style.display==="none"?"block":"none"); input.focus(); };
 
-    // Boutons rapides (chips)
+    // Bouton rapide (chip)
     chipRDV.onclick=()=> {
       add("user","Je souhaite prendre rendez-vous");
       showBookingCTA(); // propose direct
-      input.focus();
-    };
-    chipTarifs.onclick=()=> {
-      add("user","Pouvez-vous me donner les tarifs ?");
-      typing(true); setTimeout(()=>{ add("bot","Voici un aperçu des tarifs. Pour un devis précis, dites-moi votre soin souhaité 😊"); typing(false); }, 400);
       input.focus();
     };
 
@@ -127,7 +120,6 @@
         });
         const data=await r.json();
         if (data.reply) add("bot", data.reply);
-        // Si ton backend signale une intention (ex: suggest_booking: true) OU le texte bot mentionne la résa → on montre le bouton
         if (data.suggest_booking === true || mentionsBooking(String(data.reply||""))) {
           showBookingCTA();
         }
@@ -160,4 +152,5 @@
   </script>
 </body>
 </html>
+
 
